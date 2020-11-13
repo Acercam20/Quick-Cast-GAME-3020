@@ -123,9 +123,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 2
   Speed: 3
+  Damage: 5
+  dropChance: 3
   willDropItem: 0
   scoreValue: 10
-  dropTable: []
+  dropTable:
+  - {fileID: 2831684764309896609, guid: e15f17752d7228e4daf32a62990d2382, type: 3}
+  - {fileID: 4058161645887275286, guid: 74ef138efa840004f9f4dc3451e342ee, type: 3}
 --- !u!114 &498969946463765363
 MonoBehaviour:
   m_ObjectHideFlags: 0

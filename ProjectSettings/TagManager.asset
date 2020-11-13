@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - CollisionObstacles
   - WallPrefab
+  - ItemSpawner
   layers:
   - Default
   - TransparentFX

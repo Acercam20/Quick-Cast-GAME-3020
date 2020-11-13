@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     Vector2 firePointPos;
     public float angle;
     public int score = 0;
+    public float health = 100;
 
     [Space]
     [Header("References:")]
@@ -46,16 +47,21 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         player = ReInput.players.GetPlayer(playerId);
+        DontDestroyOnLoad(gameObject);
         //canvas = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<Canvas>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0)
+        {
+            Debug.Log("GAME OVER");
+        }
         Aim();
         if (player.GetButtonDown("Fire1"))
         {
-            Fire();
+            //Fire();
         }
         if (player.GetButtonDown("UseAbility1"))
         {
@@ -168,4 +174,5 @@ public class PlayerController : MonoBehaviour
     {
         score = score + scoreToAdd;
     }
+
 }

@@ -14,6 +14,7 @@ public class SpawnItems : MonoBehaviour
     public int spawnLimit = 10;
     public int currentlySpawned = 0;
     public int itemSpawnRadius = 10;
+    public int playerSpellRegenTime = 3;
 
     [Header("Setup:")]
     public GameObject minBoundsObj;
@@ -23,6 +24,7 @@ public class SpawnItems : MonoBehaviour
     Vector3 maxBoundsVec;
     Vector3 spawnLocation = new Vector3();
     BoxCollider2D hitBox;
+    private GameObject player;
 
     private void Start()
     {
@@ -31,6 +33,7 @@ public class SpawnItems : MonoBehaviour
         hitBox = GetComponent<BoxCollider2D>();
 
         int rand = Random.Range(0, objects.Length);
+        player = GameObject.FindWithTag("Player");
         //Instantiate(objects[rand], transform.position, Quaternion.identity);
     }
 
@@ -39,7 +42,7 @@ public class SpawnItems : MonoBehaviour
         if (Time.time >= nextTime)
         {
             PositionTest();
-
+            GenerateAbility();
             nextTime += interval;
         }
     }
@@ -92,5 +95,22 @@ public class SpawnItems : MonoBehaviour
         newPos.y = Random.Range(minBounds.y, maxBounds.y);
 
         return newPos;
+    }
+
+    public void GenerateAbility()
+    {
+        bool hasAbility = false;
+        for (int i = 0; i < 4; i++)
+        {
+            if (player.GetComponent<PlayerController>().inventoryScript.isFull[i])
+            {
+                hasAbility = true;
+            }
+        }
+        if (!hasAbility)
+        {
+            int random = Random.Range(0, objects.Length);
+            Instantiate(objects[random], player.transform.position, Quaternion.identity);
+        }
     }
 }
