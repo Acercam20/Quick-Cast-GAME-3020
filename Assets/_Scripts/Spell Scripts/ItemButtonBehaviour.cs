@@ -163,11 +163,10 @@ public class ItemButtonBehaviour : MonoBehaviour
         Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
         bulletRB.velocity = shootingDirection * playerScript.PROJECTILE_FORCE;
         bullet.transform.Rotate(0, 0, Mathf.Atan2(shootingDirection.y, shootingDirection.x) * Mathf.Rad2Deg + 90);
+        Destroy(gameObject);
 
         yield return new WaitForSeconds(time);
-
         Destroy(bullet);
-        Destroy(gameObject);
     }
 }
 
