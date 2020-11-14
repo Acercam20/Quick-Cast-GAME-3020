@@ -78,7 +78,7 @@ public class ItemButtonBehaviour : MonoBehaviour
 
     public void OnDeadmansCurseUsed()
     {
-        Debug.Log("Health Potion Used");
+        StartCoroutine(PiercingShotDelay(2.0f));
     }
 
     public void OnSmallCoindsUsed()
@@ -152,6 +152,22 @@ public class ItemButtonBehaviour : MonoBehaviour
             triShotLimiter = 0;
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator PiercingShotDelay(float time)
+    {
+        Vector2 shootingDirection = playerScript.crosshair.transform.localPosition;
+        shootingDirection.Normalize();
+        GameObject bullet = Instantiate(playerScript.piercingBoltPrefab, playerScript.firePoint.position, Quaternion.identity);
+
+        Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
+        bulletRB.velocity = shootingDirection * playerScript.PROJECTILE_FORCE;
+        bullet.transform.Rotate(0, 0, Mathf.Atan2(shootingDirection.y, shootingDirection.x) * Mathf.Rad2Deg + 90);
+
+        yield return new WaitForSeconds(time);
+
+        Destroy(bullet);
+        Destroy(gameObject);
     }
 }
 

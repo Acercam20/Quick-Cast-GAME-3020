@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform followTransform;
+    private GameObject player;
     public BoxCollider2D mapBounds;
 
     private float xMin, xMax, yMin, yMax;
@@ -15,6 +15,8 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
+        mapBounds = GameObject.FindWithTag("BG").GetComponent<BoxCollider2D>();
+        player = GameObject.FindWithTag("Player");
         xMin = mapBounds.bounds.min.x;
         xMax = mapBounds.bounds.max.x;
         yMin = mapBounds.bounds.min.y;
@@ -26,8 +28,10 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        camY = Mathf.Clamp(followTransform.position.y, yMin + camOrthsize, yMax - camOrthsize);
-        camX = Mathf.Clamp(followTransform.position.x, xMin + cameraRatio, xMax - cameraRatio);
-        this.followTransform.position = new Vector3(followTransform.position.x, followTransform.position.y, this.followTransform.position.z);
+        camY = Mathf.Clamp(player.transform.position.y, yMin + camOrthsize, yMax - camOrthsize);
+        camX = Mathf.Clamp(player.transform.position.x, xMin + cameraRatio, xMax - cameraRatio);
+        Debug.Log(camY);
+        gameObject.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
+        //gameObject.transform.position = new Vector3(camX, camY, this.transform.position.z);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,8 +37,11 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public Transform firePoint;
     public GameObject crosshair;
+
     public GameObject fireBoltPrefab;
     public GameObject aoeBoltPrefab;
+    public GameObject piercingBoltPrefab;
+
     public InventoryScript inventoryScript;
 
     [Space]
@@ -59,7 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         if (health <= 0)
         {
-            Debug.Log("GAME OVER");
+            PlayerDeath();
         }
         Aim();
         if (player.GetButtonDown("Fire1"))
@@ -96,6 +100,13 @@ public class PlayerController : MonoBehaviour
         movementDirection = new Vector2(player.GetAxis("Horizontal"), player.GetAxis("Vertical"));
         movementSpeed = Mathf.Clamp(movementDirection.magnitude, 0.0f, 1.0f);
         movementDirection.Normalize();
+    }
+
+    void PlayerDeath()
+    {
+        GameObject observer = GameObject.FindWithTag("GameController");
+        observer.GetComponent<GameObserverBehaviour>().SetUIScreen();
+        SceneManager.LoadScene("Defeat Screen");
     }
 
     void UseAbility(int slotNumber)
