@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
         GameObject observer = GameObject.FindWithTag("GameController");
         observer.GetComponent<GameObserverBehaviour>().SetUIScreen();
         SceneManager.LoadScene("Defeat Screen");
+        health = 100;
+        score = 0;
     }
 
     void UseAbility(int slotNumber)
@@ -199,6 +201,13 @@ public class PlayerController : MonoBehaviour
         //gameObject.GetComponent<BoxCollider2D>().enabled = true;
         StartCoroutine(ExecuteAfterTime(DASH_DURATION));
     }
+
+    public void Setup()
+    {
+        score = 0;
+        health = 100;
+        gameObject.transform.position = new Vector3(0, -15, 0);
+}
 
     IEnumerator ExecuteAfterTime(float time)
     {

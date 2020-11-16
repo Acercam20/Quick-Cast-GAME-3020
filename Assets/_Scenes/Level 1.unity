@@ -3490,9 +3490,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyList:
   - {fileID: 5732803584476364698, guid: 4118cd862ec4c784da4a8173081ff2c7, type: 3}
-  interval: 1
+  interval: 2
   nextTime: 0
-  spawnLimit: 10
+  spawnLimit: 50
   currentlySpawned: 0
   playerSafetyRadius: 5
   minBoundsObj: {fileID: 1164958876}

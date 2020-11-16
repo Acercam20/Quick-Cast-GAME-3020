@@ -22,13 +22,13 @@ public class GameObserverBehaviour : MonoBehaviour
 
     public void SetUIScreen()
     {
-        player.SetActive(false);
+        player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -100);
         mainCanvas.SetActive(false);
     }
 
     public void SetGameplayScreen()
     {
-        player.SetActive(true);
+        player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0);
         mainCanvas.SetActive(true);
     }
 }
