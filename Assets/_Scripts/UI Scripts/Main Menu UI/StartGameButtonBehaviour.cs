@@ -21,6 +21,7 @@ public class StartGameButtonBehaviour : MonoBehaviour
     {
         GameObject observer = GameObject.FindWithTag("GameController");
         observer.GetComponent<GameObserverBehaviour>().SetGameplayScreen();
+        GameObject.FindWithTag("Player").GetComponent<PlayerController>().Setup();
         SceneManager.LoadScene("Level 1");
 
     }

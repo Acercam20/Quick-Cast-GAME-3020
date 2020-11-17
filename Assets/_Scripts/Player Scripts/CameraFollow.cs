@@ -30,7 +30,7 @@ public class CameraFollow : MonoBehaviour
     {
         camY = Mathf.Clamp(player.transform.position.y, yMin + camOrthsize, yMax - camOrthsize);
         camX = Mathf.Clamp(player.transform.position.x, xMin + cameraRatio, xMax - cameraRatio);
-        Debug.Log(camY);
+        //Debug.Log(camY);
         gameObject.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
         //gameObject.transform.position = new Vector3(camX, camY, this.transform.position.z);
     }

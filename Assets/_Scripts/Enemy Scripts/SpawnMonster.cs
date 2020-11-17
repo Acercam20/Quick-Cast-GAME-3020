@@ -68,7 +68,7 @@ public class SpawnMonster : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        //bColliding = true;
+        bColliding = true;
         Debug.Log("Collided!");
 
     }

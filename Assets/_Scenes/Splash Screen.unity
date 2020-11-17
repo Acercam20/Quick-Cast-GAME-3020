@@ -2489,8 +2489,8 @@ GameObject:
   - component: {fileID: 1097010771}
   - component: {fileID: 1097010770}
   - component: {fileID: 1097010769}
-  - component: {fileID: 1097010768}
   - component: {fileID: 1097010767}
+  - component: {fileID: 1097010768}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -2516,8 +2516,8 @@ MonoBehaviour:
   - {fileID: 119552698}
   - {fileID: 814905026}
   - {fileID: 1696776966}
---- !u!61 &1097010768
-BoxCollider2D:
+--- !u!70 &1097010768
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2529,19 +2529,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.07}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
-    newSize: {x: 0.32, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.03}
+  m_Size: {x: 0.12, y: 0.2}
+  m_Direction: 0
 --- !u!95 &1097010769
 Animator:
   serializedVersion: 3
@@ -2677,7 +2667,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1097010766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: -15.6, z: 0}
+  m_LocalPosition: {x: -30.15, y: 20.11, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 971611743}

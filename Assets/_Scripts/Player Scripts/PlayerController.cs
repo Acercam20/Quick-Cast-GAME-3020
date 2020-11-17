@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float CROSSHAIR_DISTANCE = 2;
     public float MOVEMENT_BASE_SPEED = 3;
     public float PROJECTILE_FORCE = 20f;
+    public float DASH_COOLDOWN = 2.0f;
     public float DASH_SPEED = 800;
     public float DASH_DURATION;
 
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public int score = 0;
     public float health = 100;
     public bool invulnerable = false;
+    private bool dashCD = false;
 
     [Space]
     [Header("References:")]
@@ -199,20 +201,25 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Dash");
         //gameObject.GetComponent<BoxCollider2D>().enabled = true;
-        StartCoroutine(ExecuteAfterTime(DASH_DURATION));
+        if (!dashCD)
+        {
+            StartCoroutine(ExecuteAfterTime(DASH_DURATION));
+            StartCoroutine(DashCooldown(DASH_COOLDOWN));
+        }
     }
 
     public void Setup()
     {
         score = 0;
         health = 100;
-        gameObject.transform.position = new Vector3(0, -15, 0);
+        gameObject.transform.position = new Vector3(-25, 20, 0);
 }
 
     IEnumerator ExecuteAfterTime(float time)
     {
         //gameObject.GetComponent<BoxCollider2D>().enabled = false;
         //rb.AddForce(movementDirection * DASH_SPEED);
+        dashCD = true;
         gameObject.layer = 14;
         MOVEMENT_BASE_SPEED += DASH_SPEED;
 
@@ -221,5 +228,11 @@ public class PlayerController : MonoBehaviour
         //gameObject.GetComponent<BoxCollider2D>().enabled = true;
         MOVEMENT_BASE_SPEED -= DASH_SPEED;
         gameObject.layer = 8;
+    }
+
+    IEnumerator DashCooldown(float time)
+    {
+        yield return new WaitForSeconds(time);
+        dashCD = false;
     }
 }

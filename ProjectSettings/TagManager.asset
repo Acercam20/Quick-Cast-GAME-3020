@@ -11,6 +11,7 @@ TagManager:
   - WallPrefab
   - ItemSpawner
   - BG
+  - BoundaryBlock
   layers:
   - Default
   - TransparentFX
