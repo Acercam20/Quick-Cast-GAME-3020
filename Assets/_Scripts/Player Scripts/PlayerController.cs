@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [Header("Input Settings:")]
     public int playerId;
     Player player;
+    bool isPaused = false;
 
     [Space]
     [Header("Character Attributes:")]
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     public int score = 0;
     public float health = 100;
     public bool invulnerable = false;
-    private bool dashCD = false;
+    public bool dashCD = false;
 
     [Space]
     [Header("References:")]
@@ -39,13 +40,15 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public Transform firePoint;
     public GameObject crosshair;
+    public bool hasKey = false;
 
     public GameObject fireBoltPrefab;
     public GameObject aoeBoltPrefab;
     public GameObject piercingBoltPrefab;
 
     public InventoryScript inventoryScript;
-
+    public GameObject pauseCanvas;
+    bool pauseMenuSet = false;
     [Space]
     [Header("Slot References:")]
     public GameObject slot1;
@@ -67,34 +70,47 @@ public class PlayerController : MonoBehaviour
         {
             PlayerDeath();
         }
-        Aim();
-        if (player.GetButtonDown("Fire1"))
+        if(!isPaused)
         {
-            //Fire();
+            Aim();
+
+            if (player.GetButtonDown("UseAbility1"))
+            {
+                UseAbility(1);
+            }
+            if (player.GetButtonDown("UseAbility2"))
+            {
+                UseAbility(2);
+            }
+            if (player.GetButtonDown("UseAbility3"))
+            {
+                UseAbility(3);
+            }
+            if (player.GetButtonDown("UseAbility4"))
+            {
+                UseAbility(4);
+            }
+            if (player.GetButtonDown("Dash"))
+            {
+                Dash();
+            }
+
+            ProcessInputs();
+            Move();
+            Animate();
         }
-        if (player.GetButtonDown("UseAbility1"))
+        
+        if (player.GetButtonDown("Pause"))
         {
-            UseAbility(1);
+            if(!isPaused)
+            {
+                PauseGame();
+            }
+            else
+            {
+                ResumeGame();
+            }
         }
-        if (player.GetButtonDown("UseAbility2"))
-        {
-            UseAbility(2);
-        }
-        if (player.GetButtonDown("UseAbility3"))
-        {
-            UseAbility(3);
-        }
-        if (player.GetButtonDown("UseAbility4"))
-        {
-            UseAbility(4);
-        }
-        if (player.GetButtonDown("Dash"))
-        {
-            Dash();
-        }
-        ProcessInputs();
-        Move();
-        Animate();
     }
 
     void ProcessInputs()
@@ -195,7 +211,8 @@ public class PlayerController : MonoBehaviour
     public void AddScore(int scoreToAdd)
     {
         score = score + scoreToAdd;
-    }
+        dashCD = false;
+    }   
 
     void Dash()
     {
@@ -206,6 +223,20 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ExecuteAfterTime(DASH_DURATION));
             StartCoroutine(DashCooldown(DASH_COOLDOWN));
         }
+    }
+
+    public void PauseGame()
+    {
+        isPaused = true;
+        Time.timeScale = 0;
+        pauseCanvas.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1;
+        pauseCanvas.SetActive(false);
     }
 
     public void Setup()

@@ -12,6 +12,7 @@ TagManager:
   - ItemSpawner
   - BG
   - BoundaryBlock
+  - PauseCanvas
   layers:
   - Default
   - TransparentFX

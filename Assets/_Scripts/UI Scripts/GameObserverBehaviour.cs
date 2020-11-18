@@ -6,6 +6,8 @@ public class GameObserverBehaviour : MonoBehaviour
 {
     public GameObject player;
     public GameObject mainCanvas;
+    public GameObject pauseCanvas;
+    public float GameDifficultyScalar = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,18 +19,20 @@ public class GameObserverBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SetUIScreen()
     {
         player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -100);
         mainCanvas.SetActive(false);
+        pauseCanvas.SetActive(false);
     }
 
     public void SetGameplayScreen()
     {
-        player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0);
+        pauseCanvas.SetActive(false);
         mainCanvas.SetActive(true);
+        player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0);
     }
 }

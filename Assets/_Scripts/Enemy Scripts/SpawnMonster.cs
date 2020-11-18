@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnMonster : MonoBehaviour
 {
-    [Header("Objects:")]
+    [Header("Enemies:")]
     //Array of enemy types that can be spawned.
     public GameObject[] enemyList;
 
@@ -18,6 +18,7 @@ public class SpawnMonster : MonoBehaviour
     [Header("Setup:")]
     public GameObject minBoundsObj;
     public GameObject maxBoundsObj;
+    GameObject gameController;
     bool bColliding = false;
     Vector3 minBoundsVec;
     Vector3 maxBoundsVec;
@@ -26,6 +27,8 @@ public class SpawnMonster : MonoBehaviour
 
     private void Start()
     {
+        gameController = GameObject.FindWithTag("GameController");
+        spawnLimit += (int)gameController.GetComponent<GameObserverBehaviour>().GameDifficultyScalar;
         //Setting the spawn boundaries
         minBoundsVec = minBoundsObj.transform.position;
         maxBoundsVec = maxBoundsObj.transform.position;

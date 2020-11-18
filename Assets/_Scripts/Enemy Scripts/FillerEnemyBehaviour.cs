@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FillerEnemyBehaviour : MonoBehaviour
 {
-    public int Health = 2;
+    public int Health = 1;
     public float Speed = 3;
     public float Damage = 5;
     public int dropChance = 3;
@@ -14,10 +14,13 @@ public class FillerEnemyBehaviour : MonoBehaviour
     GameObject player;
     private Rigidbody2D rb;
     private CircleCollider2D hitBox;
+    private GameObject gameController;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameController = GameObject.FindWithTag("GameController");
+        Health += (int)gameController.GetComponent<GameObserverBehaviour>().GameDifficultyScalar;
         int dropCheck = Random.Range(0, dropChance);
         if (dropCheck == dropChance - 1)
         {
