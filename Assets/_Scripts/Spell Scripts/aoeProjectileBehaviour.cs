@@ -21,13 +21,16 @@ public class aoeProjectileBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        rb.velocity = new Vector3(0, 0, 0);
-        gameObject.transform.localScale = new Vector3(45.0f, 30.0f, 1.0f);
-        StartCoroutine(ExecuteAfterTime(1.5f));
-
-        if(col.gameObject.tag == "Enemy")
+        if (col.gameObject.tag != "Player")
         {
-            col.gameObject.GetComponent<FillerEnemyBehaviour>().ReduceHealth(damageValue);
+            rb.velocity = new Vector3(0, 0, 0);
+            gameObject.transform.localScale = new Vector3(45.0f, 30.0f, 1.0f);
+            StartCoroutine(ExecuteAfterTime(1.5f));
+
+            if (col.gameObject.tag == "Enemy")
+            {
+                col.gameObject.GetComponent<FillerEnemyBehaviour>().ReduceHealth(damageValue);
+            }
         }
     }
 

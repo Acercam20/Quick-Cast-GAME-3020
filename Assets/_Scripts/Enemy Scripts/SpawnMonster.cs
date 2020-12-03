@@ -15,24 +15,15 @@ public class SpawnMonster : MonoBehaviour
     public int currentlySpawned = 0;
     public int playerSafetyRadius = 5;
 
-    [Header("Setup:")]
-    public GameObject minBoundsObj;
-    public GameObject maxBoundsObj;
     GameObject gameController;
-    bool bColliding = false;
-    Vector3 minBoundsVec;
-    Vector3 maxBoundsVec;
     Vector3 spawnLocation = new Vector3();
-    BoxCollider2D hitBox;
+    private GameObject levelGenerator;
 
     private void Start()
     {
+        levelGenerator = GameObject.FindWithTag("LevelGenerator");
         gameController = GameObject.FindWithTag("GameController");
-        spawnLimit += (int)gameController.GetComponent<GameObserverBehaviour>().GameDifficultyScalar;
-        //Setting the spawn boundaries
-        minBoundsVec = minBoundsObj.transform.position;
-        maxBoundsVec = maxBoundsObj.transform.position;
-        hitBox = GetComponent<BoxCollider2D>();
+        spawnLimit = 10 * (int)gameController.GetComponent<GameObserverBehaviour>().GameDifficultyScalar;
     }
 
     private void Update()
@@ -49,43 +40,16 @@ public class SpawnMonster : MonoBehaviour
     {
         if(currentlySpawned <= spawnLimit)
         {
-            spawnLocation = RandomPosition(minBoundsVec, maxBoundsVec);
-            transform.position = spawnLocation;
-
-            //while (hitBox.bounds.Contains(spawnLocation))
-            //while (hitBox.IsTouchingLayers(0))
-            while (bColliding)
-            {
-                bColliding = false;
-                spawnLocation = RandomPosition(minBoundsVec, maxBoundsVec);
-                transform.position = spawnLocation;
-                
-            }
+            spawnLocation = levelGenerator.GetComponent<LevelGeneration>().ScoutSpawnLocation();
             GameObject player = GameObject.FindWithTag("Player");
-            if(Mathf.Abs(spawnLocation.x - player.transform.position.x) >= playerSafetyRadius || Mathf.Abs(spawnLocation.y - player.transform.position.y) >= playerSafetyRadius)
+
+            while (!(Mathf.Abs(spawnLocation.x - player.transform.position.x) >= playerSafetyRadius) || !(Mathf.Abs(spawnLocation.y - player.transform.position.y) >= playerSafetyRadius))
             {
-                InstantiatingEnemy();
+                spawnLocation = levelGenerator.GetComponent<LevelGeneration>().ScoutSpawnLocation();
             }
+            spawnLocation = levelGenerator.GetComponent<LevelGeneration>().ScoutSpawnLocation();
+            InstantiatingEnemy();
         }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        bColliding = true;
-        Debug.Log("Collided!");
-
-    }
-
-    void OnCollisionTriggerEnter2D(Collider2D other)
-    {
-        bColliding = true;
-        Debug.Log("In excrutiating pain");
-    }
-
-    void OnCollisionTriggerExit2D(Collider2D other)
-    {
-        bColliding = false;
-        Debug.Log("No longer in pain.");
     }
 
     public void InstantiatingEnemy()
@@ -93,14 +57,5 @@ public class SpawnMonster : MonoBehaviour
         int rand = Random.Range(0, enemyList.Length);
         Instantiate(enemyList[rand], spawnLocation, Quaternion.identity);
         currentlySpawned++;
-    }
-
-    public Vector3 RandomPosition(Vector3 minBounds, Vector3 maxBounds)
-    {
-        Vector3 newPos = new Vector3();
-        newPos.x = Random.Range(minBounds.x, maxBounds.x);
-        newPos.y = Random.Range(minBounds.y, maxBounds.y);
-
-        return newPos;
     }
 }

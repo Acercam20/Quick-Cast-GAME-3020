@@ -15,26 +15,30 @@ public class SpawnItems : MonoBehaviour
     public int currentlySpawned = 0;
     public int itemSpawnRadius = 10;
     public int playerSpellRegenTime = 3;
+    public int infiniteCheckCounter = 64;
 
     [Header("Setup:")]
-    public GameObject minBoundsObj;
-    public GameObject maxBoundsObj;
-    bool bColliding = false;
-    Vector3 minBoundsVec;
-    Vector3 maxBoundsVec;
+    //public GameObject minBoundsObj;
+    //public GameObject maxBoundsObj;
+    //bool bColliding = false;
+    //Vector3 minBoundsVec;
+    //Vector3 maxBoundsVec;
     Vector3 spawnLocation = new Vector3();
-    BoxCollider2D hitBox;
+    //BoxCollider2D hitBox;
     private GameObject player;
+    private GameObject levelGenerator;
 
     private void Start()
     {
-        minBoundsVec = minBoundsObj.transform.position;
-        maxBoundsVec = maxBoundsObj.transform.position;
-        hitBox = GetComponent<BoxCollider2D>();
+        levelGenerator = GameObject.FindWithTag("LevelGenerator");
+
+        //minBoundsVec = minBoundsObj.transform.position;
+        //maxBoundsVec = maxBoundsObj.transform.position;
+        //hitBox = GetComponent<BoxCollider2D>();
 
         int rand = Random.Range(0, objects.Length);
         player = GameObject.FindWithTag("Player");
-        //Instantiate(objects[rand], transform.position, Quaternion.identity);
+        Instantiate(objects[rand], transform.position, Quaternion.identity);
     }
 
     private void Update()
@@ -51,50 +55,28 @@ public class SpawnItems : MonoBehaviour
     {
         if (currentlySpawned <= spawnLimit)
         {
-            spawnLocation = RandomPosition(minBoundsVec, maxBoundsVec);
-            transform.position = spawnLocation;
+            spawnLocation = levelGenerator.GetComponent<LevelGeneration>().ScoutSpawnLocation();
+            //int infiniteCheck = 0;
+            //GameObject player = GameObject.FindWithTag("Player");
 
-            //while (hitBox.bounds.Contains(spawnLocation))
-            //while (hitBox.IsTouchingLayers(0))
-            while (bColliding)
+            /*while (!(Mathf.Abs(spawnLocation.x - player.transform.position.x) <= itemSpawnRadius || Mathf.Abs(spawnLocation.y - player.transform.position.y) <= itemSpawnRadius))
             {
-                bColliding = false;
-                spawnLocation = RandomPosition(minBoundsVec, maxBoundsVec);
-                transform.position = spawnLocation;
-
-            }
-            GameObject player = GameObject.FindWithTag("Player");
-            if (Mathf.Abs(spawnLocation.x - player.transform.position.x) <= itemSpawnRadius || Mathf.Abs(spawnLocation.y - player.transform.position.y) <= itemSpawnRadius)
-            {
-                InstantiateObject();
-            }
+                if (infiniteCheck == infiniteCheckCounter)
+                {
+                    break;
+                }
+                spawnLocation = levelGenerator.GetComponent<LevelGeneration>().ScoutSpawnLocation();
+                infiniteCheck++;
+            }*/
+            InstantiateObject(spawnLocation);
         }
     }
 
-    public void InstantiateObject()
+    public void InstantiateObject(Vector3 position)
     {
         int rand = Random.Range(0, objects.Length);
-        Instantiate(objects[rand], spawnLocation, Quaternion.identity);
+        Instantiate(objects[rand], position, Quaternion.identity);
         currentlySpawned++;
-    }
-
-    void OnCollisionTriggerEnter2D(Collider2D other)
-    {
-        bColliding = true;
-    }
-
-    void OnCollisionTriggerExit2D(Collider2D other)
-    {
-        bColliding = false;
-    }
-
-    public Vector3 RandomPosition(Vector3 minBounds, Vector3 maxBounds)
-    {
-        Vector3 newPos = new Vector3();
-        newPos.x = Random.Range(minBounds.x, maxBounds.x);
-        newPos.y = Random.Range(minBounds.y, maxBounds.y);
-
-        return newPos;
     }
 
     public void GenerateAbility()

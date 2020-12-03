@@ -34,5 +34,6 @@ public class GameObserverBehaviour : MonoBehaviour
         pauseCanvas.SetActive(false);
         mainCanvas.SetActive(true);
         player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0);
+        GameDifficultyScalar = 1;
     }
 }

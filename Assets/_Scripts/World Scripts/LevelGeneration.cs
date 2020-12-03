@@ -61,6 +61,26 @@ public class LevelGeneration : MonoBehaviour
         }
     }
 
+    public Vector3 ScoutSpawnLocation()
+    {
+        wallArray = GameObject.FindGameObjectsWithTag("WallPrefab");
+        for (int i = 0; i < wallArray.Length; i++)
+        {
+            isWallThere[Mathf.Abs((int)wallArray[i].transform.position.x), (int)wallArray[i].transform.position.y] = true;
+        }
+
+        int spawnX = Random.Range(0, arrayWidth);
+        int spawnY = Random.Range(0, arrayHeight);
+
+        while (isWallThere[spawnX, spawnY])
+        {
+            spawnX = Random.Range(0, arrayWidth);
+            spawnY = Random.Range(0, arrayHeight);
+        }
+
+        return new Vector3(-spawnX, spawnY, 0);
+    }
+
     //StartCoroutine(WaitForLoad(1.0f));
     IEnumerator WaitForLoad(float time)
     {
