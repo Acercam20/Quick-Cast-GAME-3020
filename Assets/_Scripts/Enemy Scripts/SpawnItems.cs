@@ -17,24 +17,13 @@ public class SpawnItems : MonoBehaviour
     public int playerSpellRegenTime = 3;
     public int infiniteCheckCounter = 64;
 
-    [Header("Setup:")]
-    //public GameObject minBoundsObj;
-    //public GameObject maxBoundsObj;
-    //bool bColliding = false;
-    //Vector3 minBoundsVec;
-    //Vector3 maxBoundsVec;
     Vector3 spawnLocation = new Vector3();
-    //BoxCollider2D hitBox;
     private GameObject player;
     private GameObject levelGenerator;
 
     private void Start()
     {
         levelGenerator = GameObject.FindWithTag("LevelGenerator");
-
-        //minBoundsVec = minBoundsObj.transform.position;
-        //maxBoundsVec = maxBoundsObj.transform.position;
-        //hitBox = GetComponent<BoxCollider2D>();
 
         int rand = Random.Range(0, objects.Length);
         player = GameObject.FindWithTag("Player");
@@ -56,18 +45,6 @@ public class SpawnItems : MonoBehaviour
         if (currentlySpawned <= spawnLimit)
         {
             spawnLocation = levelGenerator.GetComponent<LevelGeneration>().ScoutSpawnLocation();
-            //int infiniteCheck = 0;
-            //GameObject player = GameObject.FindWithTag("Player");
-
-            /*while (!(Mathf.Abs(spawnLocation.x - player.transform.position.x) <= itemSpawnRadius || Mathf.Abs(spawnLocation.y - player.transform.position.y) <= itemSpawnRadius))
-            {
-                if (infiniteCheck == infiniteCheckCounter)
-                {
-                    break;
-                }
-                spawnLocation = levelGenerator.GetComponent<LevelGeneration>().ScoutSpawnLocation();
-                infiniteCheck++;
-            }*/
             InstantiateObject(spawnLocation);
         }
     }

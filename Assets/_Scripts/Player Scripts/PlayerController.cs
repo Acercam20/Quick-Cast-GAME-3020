@@ -49,7 +49,16 @@ public class PlayerController : MonoBehaviour
     public InventoryScript inventoryScript;
     public GameObject pauseCanvas;
     bool pauseMenuSet = false;
+    public AudioClip Pierce;
+    public AudioClip AOE;
+    public AudioClip TriShot;
+    public AudioClip DashSFX;
+    public AudioClip DamageSFX;
+    public AudioClip DoorSFX;
+    public AudioClip KeySFX;
+    public AudioSource audioSource;
     [Space]
+
     [Header("Slot References:")]
     public GameObject slot1;
     public GameObject slot2;
@@ -59,6 +68,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         player = ReInput.players.GetPlayer(playerId);
+        audioSource = GetComponent<AudioSource>();
         DontDestroyOnLoad(gameObject);
         //canvas = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<Canvas>();
     }
@@ -220,6 +230,7 @@ public class PlayerController : MonoBehaviour
         //gameObject.GetComponent<BoxCollider2D>().enabled = true;
         if (!dashCD)
         {
+            audioSource.PlayOneShot(DashSFX);
             StartCoroutine(ExecuteAfterTime(DASH_DURATION));
             StartCoroutine(DashCooldown(DASH_COOLDOWN));
         }

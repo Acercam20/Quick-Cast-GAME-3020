@@ -27,10 +27,29 @@ public class ItemButtonBehaviour : MonoBehaviour
 
     public void OnScrollOfDestructionUsed()
     {
+        if (transform.parent.name == "Slot (1)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[0] = false;
+            Debug.Log("1");
+        }
+        else if (transform.parent.name == "Slot (2)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[1] = false;
+            Debug.Log("2");
+        }
+        else if (transform.parent.name == "Slot (3)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[2] = false;
+            Debug.Log("3");
+        }
+        else if (transform.parent.name == "Slot (4)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[3] = false;
+            Debug.Log("4");
+        }
         StartCoroutine(TriShotDelay(0.2f));
         StartCoroutine(TriShotDelay(0.4f));
         StartCoroutine(TriShotDelay(0.6f));
-
         //Destroy(gameObject);
     }
 
@@ -42,6 +61,26 @@ public class ItemButtonBehaviour : MonoBehaviour
     public void OnConductiveSurgeUsed()
     {
         ExplosiveProjectile();
+        if (transform.parent.name == "Slot (1)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[0] = false;
+            Debug.Log("1");
+        }
+        else if (transform.parent.name == "Slot (2)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[1] = false;
+            Debug.Log("2");
+        }
+        else if (transform.parent.name == "Slot (3)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[2] = false;
+            Debug.Log("3");
+        }
+        else if (transform.parent.name == "Slot (4)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[3] = false;
+            Debug.Log("4");
+        }
         Destroy(gameObject);
     }
 
@@ -79,6 +118,26 @@ public class ItemButtonBehaviour : MonoBehaviour
     public void OnDeadmansCurseUsed()
     {
         StartCoroutine(PiercingShotDelay(2.0f));
+        if (transform.parent.name == "Slot (1)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[0] = false;
+            Debug.Log("1");
+        }
+        else if (transform.parent.name == "Slot (2)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[1] = false;
+            Debug.Log("2");
+        }
+        else if (transform.parent.name == "Slot (3)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[2] = false;
+            Debug.Log("3");
+        }
+        else if (transform.parent.name == "Slot (4)")
+        {
+            player.GetComponent<PlayerController>().inventoryScript.isFull[3] = false;
+            Debug.Log("4");
+        }
     }
 
     public void OnSmallCoindsUsed()
@@ -92,8 +151,10 @@ public class ItemButtonBehaviour : MonoBehaviour
      * 
      */
 
+
     public void ExplosiveProjectile()
     {
+        player.GetComponent<PlayerController>().audioSource.PlayOneShot(player.GetComponent<PlayerController>().AOE);
         Vector2 shootingDirection = playerScript.crosshair.transform.localPosition;
         shootingDirection.Normalize();
         GameObject bullet = Instantiate(playerScript.aoeBoltPrefab, playerScript.firePoint.position, Quaternion.identity);
@@ -105,6 +166,8 @@ public class ItemButtonBehaviour : MonoBehaviour
 
     public void BasicTriShot()
     {
+        player.GetComponent<PlayerController>().audioSource.PlayOneShot(player.GetComponent<PlayerController>().TriShot);
+
         Vector2 shootingDirection1 = playerScript.crosshair.transform.localPosition;
         Vector2 shootingDirection2 = playerScript.crosshair.transform.localPosition;
         Vector2 shootingDirection3 = playerScript.crosshair.transform.localPosition;
@@ -156,6 +219,9 @@ public class ItemButtonBehaviour : MonoBehaviour
 
     IEnumerator PiercingShotDelay(float time)
     {
+        //player.GetComponent<PlayerController>().audioSource.clip = player.GetComponent<PlayerController>().Pierce;
+        player.GetComponent<PlayerController>().audioSource.PlayOneShot(player.GetComponent<PlayerController>().Pierce);
+
         Vector2 shootingDirection = playerScript.crosshair.transform.localPosition;
         shootingDirection.Normalize();
         GameObject bullet = Instantiate(playerScript.piercingBoltPrefab, playerScript.firePoint.position, Quaternion.identity);
