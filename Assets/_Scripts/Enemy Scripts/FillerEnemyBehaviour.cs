@@ -15,7 +15,7 @@ public class FillerEnemyBehaviour : MonoBehaviour
     private Rigidbody2D rb;
     private CircleCollider2D hitBox;
     private GameObject gameController;
-
+    private Vector3 prevLoc = Vector3.zero;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +41,7 @@ public class FillerEnemyBehaviour : MonoBehaviour
     void Update()
     {
         HealthCheck();
+        MovingCheck();
     }
     
     void HealthCheck()
@@ -49,6 +50,20 @@ public class FillerEnemyBehaviour : MonoBehaviour
         {
             KillEnemy();
         }
+    }
+
+    void MovingCheck()
+    {
+        Vector3 curVel = transform.position - prevLoc;
+        if (curVel.x > 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if(curVel.x < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        prevLoc = transform.position;
     }
 
     public void ReduceHealth(int damageTaken)
