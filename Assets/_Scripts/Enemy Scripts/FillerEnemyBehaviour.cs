@@ -53,6 +53,8 @@ public class FillerEnemyBehaviour : MonoBehaviour
 
     public void ReduceHealth(int damageTaken)
     {
+
+        StartCoroutine(DamageAnim(1));
         Health -= damageTaken;
     }
 
@@ -79,11 +81,22 @@ public class FillerEnemyBehaviour : MonoBehaviour
     IEnumerator ExecuteAfterTime(float time)
     {
         player = GameObject.FindWithTag("Player");
+        player.GetComponent<PlayerController>().audioSource.PlayOneShot(player.GetComponent<PlayerController>().DamageSFX);
+        gameObject.GetComponent<Animator>().SetInteger("AnimState", 3);
         player.GetComponent<PlayerController>().health -= Damage;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         hitBox.enabled = false;
         yield return new WaitForSeconds(time);
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         hitBox.enabled = true;
+        gameObject.GetComponent<Animator>().SetInteger("AnimState", 0);
     }
+
+    IEnumerator DamageAnim(float time)
+    {
+        gameObject.GetComponent<Animator>().SetInteger("AnimState", 4);
+        yield return new WaitForSeconds(time);
+        gameObject.GetComponent<Animator>().SetInteger("AnimState", 0);
+    }
+
 }

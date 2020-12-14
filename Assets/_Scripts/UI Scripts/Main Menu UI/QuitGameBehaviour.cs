@@ -18,6 +18,7 @@ public class QuitGameBehaviour : MonoBehaviour
 
     public void OnQuitGameButtonPressed()
     {
+        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
         Application.Quit();
     }
 }

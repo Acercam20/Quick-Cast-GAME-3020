@@ -25,6 +25,7 @@ public class DoorBehaviour : MonoBehaviour
             if (col.gameObject.GetComponent<PlayerController>().hasKey)
             {
                 //Advance Level
+                col.gameObject.GetComponent<PlayerController>().audioSource.PlayOneShot(col.gameObject.GetComponent<PlayerController>().DoorSFX);
                 col.gameObject.GetComponent<PlayerController>().hasKey = false;
                 gameController.GetComponent<GameObserverBehaviour>().GameDifficultyScalar++;
                 SceneManager.LoadScene("Level 1");

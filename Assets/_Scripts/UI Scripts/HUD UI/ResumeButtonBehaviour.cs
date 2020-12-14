@@ -18,6 +18,7 @@ public class ResumeButtonBehaviour : MonoBehaviour
 
     public void OnResumeButtonPressed()
     {
+        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
         GameObject.FindWithTag("Player").GetComponent<PlayerController>().ResumeGame();
     }
 }

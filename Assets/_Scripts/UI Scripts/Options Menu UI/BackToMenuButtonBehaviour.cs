@@ -19,6 +19,7 @@ public class BackToMenuButtonBehaviour : MonoBehaviour
 
     public void OnBackButtonPressed()
     {
+        GetComponent<AudioSource>().Play();
         SceneManager.LoadScene("Main Menu");
     }
 }

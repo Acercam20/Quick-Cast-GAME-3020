@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CanvasHUDBehaviour : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class CanvasHUDBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (SceneManager.GetActiveScene().name != "Level 1")
+        {
+            GetComponent<Canvas>().enabled = false;
+        }
+        else
+        {
+            GetComponent<Canvas>().enabled = true;
+        }
     }
 }

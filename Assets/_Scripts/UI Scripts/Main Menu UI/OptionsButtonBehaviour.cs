@@ -19,6 +19,7 @@ public class OptionsButtonBehaviour : MonoBehaviour
 
     public void OnOptionsButtonPressed()
     {
+        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
         SceneManager.LoadScene("Options Menu");
     }
 }

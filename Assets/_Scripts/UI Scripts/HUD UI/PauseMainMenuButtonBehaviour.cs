@@ -19,6 +19,7 @@ public class PauseMainMenuButtonBehaviour : MonoBehaviour
 
     public void OnMainMenuButtonPressed()
     {
+        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
         GameObject.FindWithTag("Player").GetComponent<PlayerController>().ResumeGame();
         SceneManager.LoadScene("Main Menu");
     }

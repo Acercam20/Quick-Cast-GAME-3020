@@ -19,6 +19,7 @@ public class StartGameButtonBehaviour : MonoBehaviour
 
     public void OnStartGameButtonPressed()
     {
+        GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
         GameObject observer = GameObject.FindWithTag("GameController");
         observer.GetComponent<GameObserverBehaviour>().SetGameplayScreen();
         //observer.GetComponent<GameObserverBehaviour>().GameDifficultyScalar = 1;

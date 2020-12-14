@@ -21,6 +21,7 @@ public class KeyBehaviour : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             col.gameObject.GetComponent<PlayerController>().hasKey = true;
+            col.gameObject.GetComponent<PlayerController>().audioSource.PlayOneShot(col.gameObject.GetComponent<PlayerController>().KeySFX);
             Destroy(gameObject);
         }
     }
